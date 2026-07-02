@@ -1,0 +1,114 @@
+---
+import { faq } from '../data/content';
+---
+
+<section class="faq secao" id="faq">
+  <div class="container faq__wrap">
+    <div class="cabecalho-secao">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2 class="titulo-secao">Tudo o que você precisa saber antes de investir</h2>
+      <p class="lead">Respostas diretas às dúvidas mais comuns de quem está avaliando uma franquia Bengô Açaí.</p>
+    </div>
+
+    <div class="faq__lista">
+      {
+        faq.map((item) => (
+          <details class="faq__item">
+            <summary class="faq__pergunta">
+              <h3>{item.pergunta}</h3>
+              <span class="faq__mais" aria-hidden="true" />
+            </summary>
+            <p class="faq__resposta">{item.resposta}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__wrap {
+    max-width: 820px;
+  }
+
+  .faq__lista {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .faq__item {
+    border: 1px solid var(--borda);
+    border-radius: var(--r-md);
+    background: var(--branco);
+    overflow: hidden;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .faq__item[open] {
+    border-color: var(--acai-600);
+    box-shadow: var(--sombra-sm);
+  }
+
+  .faq__pergunta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.4rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__pergunta::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__pergunta h3 {
+    font-size: 1.08rem;
+    font-weight: var(--peso-semi);
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+  }
+
+  .faq__mais {
+    position: relative;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+  }
+
+  .faq__mais::before,
+  .faq__mais::after {
+    content: '';
+    position: absolute;
+    background: var(--acai-700);
+    border-radius: 2px;
+    transition: transform 0.2s ease;
+  }
+
+  .faq__mais::before {
+    top: 50%;
+    left: 2px;
+    right: 2px;
+    height: 2.5px;
+    transform: translateY(-50%);
+  }
+
+  .faq__mais::after {
+    left: 50%;
+    top: 2px;
+    bottom: 2px;
+    width: 2.5px;
+    transform: translateX(-50%);
+  }
+
+  .faq__item[open] .faq__mais::after {
+    transform: translateX(-50%) scaleY(0);
+  }
+
+  .faq__resposta {
+    padding: 0 1.4rem 1.35rem;
+    color: var(--ink-suave);
+    line-height: 1.65;
+  }
+</style>

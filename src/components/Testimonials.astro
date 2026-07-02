@@ -1,0 +1,154 @@
+---
+import { depoimentos } from '../data/content';
+---
+
+<section class="depo secao" id="depoimentos">
+  <div class="container">
+    <div class="depo__topo">
+      <div class="cabecalho-secao depo__intro reveal">
+        <span class="eyebrow">Quem já é franqueado</span>
+        <h2 class="titulo-secao">Histórias reais de quem construiu um negócio com a Bengô</h2>
+        <p class="lead">
+          Empreendedores de norte a nordeste já vivem o dia a dia da franquia — e muitos já partem
+          para a segunda unidade.
+        </p>
+      </div>
+
+      <figure class="depo__foto reveal">
+        <img
+          src="/images/franqueadas.webp"
+          srcset="/images/franqueadas-300.webp 300w, /images/franqueadas-768.webp 768w, /images/franqueadas.webp 800w"
+          sizes="(min-width: 900px) 38vw, 80vw"
+          alt="Três franqueadas Bengô Açaí sorrindo e segurando potes de açaí da marca"
+          width="800"
+          height="670"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+
+    <div class="depo__grid">
+      {
+        depoimentos.map((d) => (
+          <figure class="depo__card reveal">
+            <svg class="depo__aspas" viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true">
+              <path d="M9.5 5C6.5 6.5 5 9 5 12v7h6v-7H7.5c0-2 .8-3.4 2.6-4.4L9.5 5zM19.5 5C16.5 6.5 15 9 15 12v7h6v-7h-3.5c0-2 .8-3.4 2.6-4.4L19.5 5z" />
+            </svg>
+            <blockquote class="depo__texto">{d.texto}</blockquote>
+            <figcaption class="depo__autor">
+              <span class="depo__avatar" aria-hidden="true">{d.nome.charAt(0)}</span>
+              <span>
+                <span class="depo__nome">{d.nome}</span>
+                <span class="depo__local">{d.local}</span>
+              </span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .depo {
+    background: var(--nuvem);
+  }
+
+  .depo__topo {
+    display: grid;
+    gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+    align-items: center;
+    margin-bottom: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
+  }
+
+  .depo__intro {
+    margin-bottom: 0;
+  }
+
+  .depo__foto {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .depo__foto img {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    filter: drop-shadow(0 24px 40px rgba(64, 0, 78, 0.22));
+  }
+
+  .depo__grid {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: 1fr;
+  }
+
+  .depo__card {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--r-lg);
+    padding: clamp(1.6rem, 1.3rem + 1vw, 2.2rem);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--sombra-sm);
+  }
+
+  .depo__aspas {
+    color: var(--limao);
+    margin-bottom: 0.5rem;
+  }
+
+  .depo__texto {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .depo__autor {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--borda);
+  }
+
+  .depo__avatar {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--grad-acai);
+    color: var(--branco);
+    font-weight: var(--peso-bold);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .depo__nome {
+    display: block;
+    font-weight: var(--peso-bold);
+  }
+
+  .depo__local {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--ink-suave);
+  }
+
+  @media (min-width: 760px) {
+    .depo__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .depo__topo {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+</style>

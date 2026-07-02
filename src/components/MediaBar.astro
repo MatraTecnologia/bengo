@@ -1,0 +1,64 @@
+---
+const veiculos = ['Pequenas Empresas & Grandes Negócios', 'g1', 'Imirante', 'O Norte', 'Empresas & Negócios'];
+---
+
+<section class="midiabar" aria-label="Presença na mídia">
+  <div class="container midiabar__row">
+    <span class="midiabar__label">Visto na mídia</span>
+    <ul class="midiabar__lista">
+      {veiculos.map((v) => <li>{v}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .midiabar {
+    position: relative;
+    z-index: 1;
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.72);
+    padding-block: 1.1rem;
+  }
+
+  .midiabar__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .midiabar__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: var(--peso-semi);
+    color: var(--limao);
+    white-space: nowrap;
+  }
+
+  .midiabar__lista {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .midiabar__lista li {
+    font-weight: var(--peso-semi);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0.85;
+  }
+
+  @media (min-width: 760px) {
+    .midiabar__row {
+      justify-content: space-between;
+      flex-wrap: nowrap;
+    }
+  }
+</style>

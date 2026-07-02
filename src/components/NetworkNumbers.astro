@@ -1,0 +1,160 @@
+---
+import { numerosRede } from '../data/content';
+---
+
+<section class="rede secao" id="numeros">
+  <div class="rede__glow" aria-hidden="true"></div>
+  <div class="container rede__grid-wrap">
+    <div class="rede__col">
+      <div class="cabecalho-secao rede__cab reveal">
+        <span class="eyebrow eyebrow--claro">Números da rede</span>
+        <h2 class="titulo-secao">Uma operação que já provou que funciona</h2>
+        <p class="lead rede__lead">
+          Do Maranhão para o Brasil: a Bengô Açaí construiu escala com consistência. Estes são os
+          números que sustentam a confiança de cada novo franqueado.
+        </p>
+      </div>
+
+      <div class="rede__grid">
+        {
+          numerosRede.map((n) => (
+            <div class="rede__item reveal">
+              <p class={n.tipo === 'claro' ? 'stat-numero stat-numero--claro' : 'stat-numero'}>
+                {n.prefixo}
+                <span class="rede__conta" data-target={n.countTo}>{n.countTo}</span>
+                <span class="rede__sufixo">{n.sufixo}</span>
+              </p>
+              <p class="rede__rotulo">{n.rotulo}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <figure class="rede__mapa reveal">
+      <img
+        src="/images/mapa-brasil-964.png"
+        srcset="/images/mapa-brasil-768.png 768w, /images/mapa-brasil-964.png 964w, /images/mapa-brasil-1445.png 1445w"
+        sizes="(min-width: 900px) 40vw, 80vw"
+        alt="Mapa do Brasil com as lojas franqueadas Bengô Açaí marcadas em 10 estados"
+        width="964"
+        height="1024"
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption class="rede__mapa-cap">Presença Bengô Açaí em 10 estados</figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  const animar = () => {
+    const reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll<HTMLElement>('.rede__conta').forEach((el) => {
+      const alvo = Number(el.dataset.target || '0');
+      if (reduz) {
+        el.textContent = String(alvo);
+        return;
+      }
+      const io = new IntersectionObserver((entradas, obs) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          obs.disconnect();
+          const inicio = performance.now();
+          const dur = 1400;
+          const passo = (agora: number) => {
+            const p = Math.min((agora - inicio) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = String(Math.round(alvo * eased));
+            if (p < 1) requestAnimationFrame(passo);
+          };
+          requestAnimationFrame(passo);
+        });
+      }, { threshold: 0.6 });
+      io.observe(el);
+    });
+  };
+  animar();
+</script>
+
+<style>
+  .rede {
+    position: relative;
+    background: var(--grad-acai);
+    color: var(--branco);
+    overflow: hidden;
+  }
+
+  .rede__glow {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: var(--acai-600);
+    filter: blur(120px);
+    opacity: 0.55;
+    top: -180px;
+    left: 30%;
+  }
+
+  .rede__grid-wrap {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(2rem, 1.4rem + 3vw, 4rem);
+    align-items: center;
+  }
+
+  .rede__lead {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .rede__grid {
+    display: grid;
+    gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .rede__item {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .rede__sufixo {
+    font-size: 0.42em;
+    letter-spacing: -0.01em;
+  }
+
+  .rede__rotulo {
+    margin-top: 0.7rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: var(--peso-medio);
+    max-width: 22ch;
+  }
+
+  .rede__mapa {
+    margin: 0;
+    text-align: center;
+  }
+
+  .rede__mapa img {
+    width: 100%;
+    max-width: 460px;
+    margin-inline: auto;
+    height: auto;
+    filter: drop-shadow(0 20px 40px rgba(24, 0, 30, 0.35));
+  }
+
+  .rede__mapa-cap {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: var(--peso-semi);
+    color: var(--limao);
+  }
+
+  @media (min-width: 900px) {
+    .rede__grid-wrap {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+</style>

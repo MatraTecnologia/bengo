@@ -1,0 +1,119 @@
+---
+import { site } from '../data/content';
+---
+
+<section class="video secao" id="video">
+  <div class="container">
+    <div class="cabecalho-secao video__cab reveal">
+      <span class="eyebrow eyebrow--claro">A marca por dentro</span>
+      <h2 class="titulo-secao">Veja a Bengô Açaí em movimento</h2>
+      <p class="lead video__lead">
+        Conheça a operação, as lojas e a experiência que transformou a Bengô na franquia de açaí que
+        mais cresce no Brasil.
+      </p>
+    </div>
+
+    <div class="video__player reveal" data-yt={site.youtubeId}>
+      <img
+        class="video__poster"
+        src="/images/loja-jardim.webp"
+        srcset="/images/loja-jardim-768.webp 768w, /images/loja-jardim.webp 1000w"
+        sizes="(min-width: 900px) 900px, 92vw"
+        alt="Interior de uma loja Bengô Açaí — clique para assistir ao vídeo institucional"
+        width="1000"
+        height="750"
+        loading="lazy"
+        decoding="async"
+      />
+      <button class="video__play" type="button" aria-label="Reproduzir vídeo institucional da Bengô Açaí">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.video__player').forEach((player) => {
+    const id = player.dataset.yt || '';
+    const botao = player.querySelector('.video__play');
+    botao?.addEventListener('click', () => {
+      if (!id || id.startsWith('TODO')) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = 'Vídeo institucional Bengô Açaí';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'video__iframe';
+      player.replaceChildren(iframe);
+    });
+  });
+</script>
+
+<style>
+  .video {
+    background: var(--acai-900);
+    color: var(--branco);
+  }
+
+  .video__cab {
+    align-items: center;
+    text-align: center;
+  }
+
+  .video__cab .titulo-secao,
+  .video__lead {
+    margin-inline: auto;
+  }
+
+  .video__lead {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+  }
+
+  .video__player {
+    position: relative;
+    max-width: 900px;
+    margin-inline: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--sombra-md);
+    cursor: pointer;
+  }
+
+  .video__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video__play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 84px;
+    height: 84px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--grad-vitalidade);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    padding-left: 4px;
+    box-shadow: var(--sombra-cta);
+    transition: transform 0.2s ease;
+  }
+
+  .video__play:hover {
+    transform: scale(1.08);
+  }
+
+  .video__player :global(.video__iframe) {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

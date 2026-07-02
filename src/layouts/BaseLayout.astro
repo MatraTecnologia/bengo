@@ -1,0 +1,153 @@
+---
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-500.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-700.css';
+import '@fontsource/poppins/latin-800.css';
+import '../styles/global.css';
+import { site, faq, investimento } from '../data/content';
+
+const {
+  title = 'Franquia de Açaí Bengô — Fature até R$ 1,3 milhão por ano',
+  description = 'Seja um franqueado Bengô Açaí. Investimento a partir de R$ 250 mil, faturamento médio de R$ 80 mil/mês e margem de até 25%. Fabricação e logística próprias, +140 lojas em 10 estados.',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL('/og-image.jpg', site.url).href; // TODO: gerar imagem OG real
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${site.url}#organizacao`,
+      name: site.nome,
+      url: site.url,
+      logo: `${site.url}/images/logo-bengo.png`,
+      foundingDate: site.fundacao,
+      areaServed: 'BR',
+      slogan: 'Qualidade Premium e Experiência Única no Consumo de Açaí',
+      description:
+        'Rede de franquias de açaí com fabricação e logística próprias, fundada no Maranhão em 2017 e em expansão nacional.',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}#site`,
+      url: site.url,
+      name: site.nome,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${site.url}#organizacao` },
+    },
+    {
+      '@type': 'Service',
+      '@id': `${site.url}#franquia`,
+      name: 'Franquia Bengô Açaí',
+      serviceType: 'Oportunidade de franquia de açaí',
+      provider: { '@id': `${site.url}#organizacao` },
+      areaServed: 'BR',
+      description:
+        'Oportunidade de franquia da rede Bengô Açaí, com investimento a partir de R$ 250 mil, faturamento médio mensal de R$ 80 mil por loja e margem de lucro de até 25%.',
+      offers: {
+        '@type': 'Offer',
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          priceCurrency: 'BRL',
+          minPrice: 250000,
+          description: `Investimento inicial a partir de ${investimento.aPartirDe}`,
+        },
+        availability: 'https://schema.org/InStock',
+        url: `${site.url}/#franquia`,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${site.url}#trilha`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Início', item: site.url },
+        { '@type': 'ListItem', position: 2, name: 'Seja um franqueado', item: `${site.url}/#formulario` },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${site.url}#faq`,
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: item.pergunta,
+        acceptedAnswer: { '@type': 'Answer', text: item.resposta },
+      })),
+    },
+  ],
+};
+
+const temVideo = site.youtubeId && !site.youtubeId.startsWith('TODO');
+if (temVideo) {
+  jsonLd['@graph'].push({
+    '@type': 'VideoObject',
+    '@id': `${site.url}#video`,
+    name: 'Vídeo institucional Bengô Açaí',
+    description: 'Conheça a operação, as lojas e a experiência da franquia de açaí Bengô Açaí.',
+    thumbnailUrl: `https://i.ytimg.com/vi/${site.youtubeId}/hqdefault.jpg`,
+    uploadDate: `${site.fundacao}-01-01`,
+    contentUrl: `https://www.youtube.com/watch?v=${site.youtubeId}`,
+    embedUrl: `https://www.youtube.com/embed/${site.youtubeId}`,
+    publisher: { '@id': `${site.url}#organizacao` },
+  } as (typeof jsonLd)['@graph'][number]);
+}
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#71004e" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.nome} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      const alvos = document.querySelectorAll<HTMLElement>('.reveal');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        alvos.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entradas, obs) => {
+            entradas.forEach((e) => {
+              if (!e.isIntersecting) return;
+              e.target.classList.add('is-visible');
+              obs.unobserve(e.target);
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        );
+        alvos.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

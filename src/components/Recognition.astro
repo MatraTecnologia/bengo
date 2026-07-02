@@ -1,0 +1,109 @@
+---
+import { midia } from '../data/content';
+---
+
+<section class="rec secao" id="reconhecimento">
+  <div class="container">
+    <div class="cabecalho-secao reveal">
+      <span class="eyebrow">Reconhecimento e mídia</span>
+      <h2 class="titulo-secao">Uma marca reconhecida entre as melhores do país</h2>
+      <p class="lead">
+        A imprensa acompanha a expansão da Bengô Açaí — da fundação no Maranhão ao faturamento de
+        dezenas de milhões em toda a rede.
+      </p>
+    </div>
+
+    <div class="rec__layout">
+      <figure class="rec__foto reveal">
+        <img
+          src="/images/reportagens-1024.png"
+          srcset="/images/reportagens-768.png 768w, /images/reportagens-1024.png 1024w, /images/reportagens-1536.png 1536w, /images/reportagens.png 1920w"
+          sizes="(min-width: 900px) 55vw, 92vw"
+          alt="Reportagens sobre a Bengô Açaí nos veículos g1, Imirante, O Norte e Empresas & Negócios"
+          width="1024"
+          height="576"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+
+      <div class="rec__cards">
+        {
+          midia.map((m) => (
+            <article class="rec__card reveal">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                <path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9L9.5 8z" stroke-linejoin="round" />
+              </svg>
+              <div>
+                <h3 class="rec__titulo">{m.titulo}</h3>
+                <p class="rec__fonte">{m.fonte}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rec__layout {
+    display: grid;
+    gap: var(--gap);
+    align-items: start;
+  }
+
+  .rec__foto {
+    margin: 0;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    border: 1px solid var(--borda);
+    background: var(--branco);
+    box-shadow: var(--sombra-sm);
+  }
+
+  .rec__foto img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .rec__cards {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .rec__card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--r-md);
+    padding: 1.15rem 1.3rem;
+    background: linear-gradient(160deg, var(--branco), var(--gelo));
+  }
+
+  .rec__card svg {
+    color: var(--amarelo);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .rec__titulo {
+    font-size: 1.05rem;
+    font-weight: var(--peso-bold);
+    line-height: 1.3;
+  }
+
+  .rec__fonte {
+    margin-top: 0.35rem;
+    color: var(--ink-suave);
+    font-size: 0.88rem;
+  }
+
+  @media (min-width: 900px) {
+    .rec__layout {
+      grid-template-columns: 1.25fr 0.75fr;
+    }
+  }
+</style>

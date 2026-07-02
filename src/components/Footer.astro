@@ -1,0 +1,144 @@
+---
+import { disclaimer, site } from '../data/content';
+
+const links = [
+  { href: '#mercado', rotulo: 'Mercado' },
+  { href: '#diferenciais', rotulo: 'Diferenciais' },
+  { href: '#numeros', rotulo: 'Números da rede' },
+  { href: '#investimento', rotulo: 'Investimento' },
+  { href: '#depoimentos', rotulo: 'Depoimentos' },
+  { href: '#faq', rotulo: 'Perguntas frequentes' },
+  { href: '#formulario', rotulo: 'Seja um franqueado' },
+];
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__topo">
+      <div class="rodape__marca">
+        <a href="#topo" class="rodape__logo" aria-label="Bengô Açaí — início">
+          <img
+            src="/images/logo-bengo.png"
+            alt="Logotipo Bengô Açaí"
+            width="217"
+            height="58"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <p class="rodape__tag">Qualidade premium e experiência única no consumo de açaí. Desde 2017, do Maranhão para o Brasil.</p>
+        <a href={site.whatsapp} class="btn btn--wpp rodape__wpp" target="_blank" rel="noopener">Falar com o time comercial</a>
+      </div>
+
+      <nav class="rodape__nav" aria-label="Navegação do rodapé">
+        <span class="rodape__nav-titulo">A franquia</span>
+        {links.map((l) => <a href={l.href}>{l.rotulo}</a>)}
+      </nav>
+    </div>
+
+    <p class="rodape__disclaimer">{disclaimer}</p>
+
+    <div class="rodape__base">
+      <span>© {ano} {site.nome}. Todos os direitos reservados.</span>
+      <span>Franquia de açaí em expansão nacional.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--acai-900);
+    color: rgba(255, 255, 255, 0.78);
+    padding-block: clamp(3rem, 2rem + 3vw, 4.5rem) 2rem;
+  }
+
+  .rodape__topo {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .rodape__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: var(--peso-black);
+    font-size: 1.4rem;
+    color: var(--branco);
+    letter-spacing: -0.03em;
+  }
+
+  .rodape__logo img {
+    width: 150px;
+    height: auto;
+  }
+
+  .rodape__acai {
+    color: var(--limao);
+    margin-left: 0.25rem;
+  }
+
+  .rodape__ponto {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--grad-vitalidade);
+  }
+
+  .rodape__tag {
+    margin: 1rem 0 1.5rem;
+    max-width: 42ch;
+    line-height: 1.6;
+  }
+
+  .rodape__nav {
+    display: grid;
+    gap: 0.7rem;
+    align-content: start;
+  }
+
+  .rodape__nav-titulo {
+    color: var(--branco);
+    font-weight: var(--peso-bold);
+    margin-bottom: 0.3rem;
+  }
+
+  .rodape__nav a {
+    color: rgba(255, 255, 255, 0.72);
+    transition: color 0.15s ease;
+    width: fit-content;
+  }
+
+  .rodape__nav a:hover {
+    color: var(--limao);
+  }
+
+  .rodape__disclaimer {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 2rem 0;
+    max-width: 90ch;
+  }
+
+  .rodape__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.55);
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  @media (min-width: 760px) {
+    .rodape__topo {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

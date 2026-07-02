@@ -1,0 +1,245 @@
+---
+import { investimento, disclaimer } from '../data/content';
+---
+
+<section class="modelo secao" id="investimento">
+  <div class="container">
+    <div class="cabecalho-secao">
+      <span class="eyebrow">Modelo de negócio</span>
+      <h2 class="titulo-secao">Quanto custa e o que está incluso no investimento?</h2>
+      <p class="lead">
+        Transparência do início ao fim: veja exatamente onde entra o seu investimento, os custos
+        mensais fixos e as especificações da loja Bengô Açaí.
+      </p>
+    </div>
+
+    <div class="modelo__grid">
+      <div class="modelo__destaque">
+        <span class="modelo__label">Investimento inicial</span>
+        <p class="modelo__valor">
+          a partir de <strong>{investimento.aPartirDe}</strong>
+        </p>
+        <p class="modelo__nota">O valor varia conforme a necessidade de obras civis do ponto escolhido.</p>
+
+        <ul class="modelo__specs">
+          {
+            investimento.specs.map((s) => (
+              <li>
+                <span class="modelo__spec-rot">{s.rotulo}</span>
+                <span class="modelo__spec-val">{s.valor}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="modelo__tabelas">
+        <div class="modelo__bloco">
+          <h3 class="modelo__h3">Incluso no investimento</h3>
+          <ul class="modelo__inclui">
+            {
+              investimento.inclui.map((i) => (
+                <li>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  {i}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="modelo__bloco">
+          <h3 class="modelo__h3">Custos mensais fixos</h3>
+          <table class="modelo__tabela">
+            <caption class="sr-only">Custos mensais fixos da franquia Bengô Açaí</caption>
+            <tbody>
+              {
+                investimento.mensais.map((m) => (
+                  <tr>
+                    <th scope="row">{m.item}</th>
+                    <td>{m.valor}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <p class="modelo__disclaimer">{disclaimer}</p>
+
+    <div class="modelo__cta">
+      <a href="#formulario" class="btn btn--roxo">Quero receber a apresentação completa</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .modelo__grid {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .modelo__destaque {
+    background: var(--grad-acai);
+    color: var(--branco);
+    border-radius: var(--r-lg);
+    padding: clamp(1.8rem, 1.4rem + 1.5vw, 2.6rem);
+    box-shadow: var(--sombra-md);
+  }
+
+  .modelo__label {
+    font-size: var(--t-eyebrow);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--limao);
+    font-weight: var(--peso-semi);
+  }
+
+  .modelo__valor {
+    font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem);
+    font-weight: var(--peso-medio);
+    margin-top: 0.6rem;
+    line-height: 1.15;
+  }
+
+  .modelo__valor strong {
+    display: block;
+    font-weight: var(--peso-black);
+    background: var(--grad-numero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.35em;
+  }
+
+  .modelo__nota {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.92rem;
+    margin-top: 0.75rem;
+  }
+
+  .modelo__specs {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.75rem;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .modelo__specs li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .modelo__spec-rot {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .modelo__spec-val {
+    font-weight: var(--peso-bold);
+    text-align: right;
+  }
+
+  .modelo__tabelas {
+    display: grid;
+    gap: var(--gap);
+  }
+
+  .modelo__bloco {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--r-lg);
+    padding: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  }
+
+  .modelo__h3 {
+    font-size: var(--t-h3);
+    font-weight: var(--peso-bold);
+    margin-bottom: 1.1rem;
+  }
+
+  .modelo__inclui {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .modelo__inclui li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: var(--peso-medio);
+  }
+
+  .modelo__inclui svg {
+    flex-shrink: 0;
+    color: var(--verde-escuro);
+  }
+
+  .modelo__tabela {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .modelo__tabela th,
+  .modelo__tabela td {
+    text-align: left;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--borda);
+  }
+
+  .modelo__tabela th {
+    font-weight: var(--peso-medio);
+    color: var(--ink-suave);
+  }
+
+  .modelo__tabela td {
+    text-align: right;
+    font-weight: var(--peso-bold);
+    color: var(--acai-700);
+  }
+
+  .modelo__disclaimer {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--ink-suave);
+    max-width: 82ch;
+    padding: 1rem 1.25rem;
+    background: var(--gelo);
+    border-left: 3px solid var(--acai-700);
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  }
+
+  .modelo__cta {
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 900px) {
+    .modelo__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+  }
+</style>

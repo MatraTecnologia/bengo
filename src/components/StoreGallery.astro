@@ -1,0 +1,131 @@
+---
+const fotos = [
+  {
+    base: 'loja-fachada',
+    variantes: '/images/loja-fachada-300.webp 300w, /images/loja-fachada-768.webp 768w, /images/loja-fachada.webp 1000w',
+    w: 1000,
+    h: 750,
+    alt: 'Fachada iluminada de uma loja franqueada Bengô Açaí com letreiro roxo e palmeiras',
+    legenda: 'Fachada padronizada',
+    destaque: true,
+  },
+  {
+    base: 'loja-jardim',
+    variantes: '/images/loja-jardim-300.webp 300w, /images/loja-jardim-768.webp 768w, /images/loja-jardim.webp 1000w',
+    w: 1000,
+    h: 750,
+    alt: 'Interior de loja Bengô Açaí com jardim vertical e letreiro neon Sorvete Amor Muito Açaí',
+    legenda: 'Ambiente instagramável',
+  },
+  {
+    base: 'loja-salao',
+    variantes: '/images/loja-salao-768.webp 768w, /images/loja-salao-1024.webp 1024w, /images/loja-salao-1536.webp 1536w',
+    w: 1024,
+    h: 768,
+    alt: 'Salão de atendimento de loja Bengô Açaí com mesas e cadeiras coloridas',
+    legenda: 'Salão para consumo',
+  },
+  {
+    base: 'loja-balcao',
+    variantes: '/images/loja-balcao-300.webp 300w, /images/loja-balcao-768.webp 768w, /images/loja-balcao.webp 1000w',
+    w: 1000,
+    h: 750,
+    alt: 'Área interna com estante verde e jardim vertical em uma loja Bengô Açaí',
+    legenda: 'Design de marca',
+  },
+];
+---
+
+<section class="galeria secao" id="loja">
+  <div class="container">
+    <div class="cabecalho-secao reveal">
+      <span class="eyebrow">Conheça a loja</span>
+      <h2 class="titulo-secao">Lojas modernas, feitas para vender e encantar</h2>
+      <p class="lead">
+        Cada unidade Bengô Açaí segue um projeto arquitetônico próprio: ambientes marcantes,
+        confortáveis e prontos para virar ponto de encontro na cidade.
+      </p>
+    </div>
+
+    <div class="galeria__grid">
+      {
+        fotos.map((f) => (
+          <figure class={`galeria__item reveal ${f.destaque ? 'galeria__item--destaque' : ''}`}>
+            <img
+              src={`/images/${f.base}${f.base === 'loja-salao' ? '-1024' : ''}.webp`}
+              srcset={f.variantes}
+              sizes={f.destaque ? '(min-width: 760px) 60vw, 92vw' : '(min-width: 760px) 30vw, 92vw'}
+              alt={f.alt}
+              width={f.w}
+              height={f.h}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="galeria__cap">{f.legenda}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .galeria {
+    background: var(--nuvem);
+  }
+
+  .galeria__grid {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: 1fr;
+  }
+
+  .galeria__item {
+    position: relative;
+    margin: 0;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--sombra-sm);
+  }
+
+  .galeria__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .galeria__item:hover img {
+    transform: scale(1.06);
+  }
+
+  .galeria__cap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.5rem 1.25rem 1.1rem;
+    color: var(--branco);
+    font-weight: var(--peso-semi);
+    background: linear-gradient(to top, rgba(24, 0, 30, 0.78), transparent);
+  }
+
+  @media (min-width: 760px) {
+    .galeria__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .galeria__item--destaque {
+      grid-column: 1 / -1;
+    }
+    .galeria__item--destaque img {
+      aspect-ratio: 12 / 5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .galeria__item:hover img {
+      transform: none;
+    }
+  }
+</style>

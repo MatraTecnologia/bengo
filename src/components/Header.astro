@@ -1,0 +1,97 @@
+---
+const links = [
+  { href: '#mercado', rotulo: 'Mercado' },
+  { href: '#diferenciais', rotulo: 'Diferenciais' },
+  { href: '#numeros', rotulo: 'Números' },
+  { href: '#investimento', rotulo: 'Investimento' },
+  { href: '#faq', rotulo: 'Dúvidas' },
+];
+---
+
+<header class="cab">
+  <div class="container cab__row">
+    <a href="#topo" class="cab__marca" aria-label="Bengô Açaí — início">
+      <img class="cab__simbolo" src="/images/simbolo-bengo.png" alt="" width="61" height="58" aria-hidden="true" />
+      Bengô
+    </a>
+
+    <nav class="cab__nav" aria-label="Navegação da página">
+      {links.map((l) => <a href={l.href}>{l.rotulo}</a>)}
+    </nav>
+
+    <a href="#formulario" class="btn btn--primario cab__cta">Quero ser franqueado</a>
+  </div>
+</header>
+
+<style>
+  .cab {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .cab__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 72px;
+  }
+
+  .cab__marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: var(--peso-black);
+    font-size: 1.35rem;
+    letter-spacing: -0.03em;
+    color: var(--acai-700);
+  }
+
+  .cab__acai {
+    color: var(--verde-escuro);
+    margin-left: 0.25rem;
+  }
+
+  .cab__simbolo {
+    width: auto;
+    height: 32px;
+  }
+
+  .cab__nav {
+    display: none;
+    gap: 1.75rem;
+    font-weight: var(--peso-medio);
+    font-size: 0.95rem;
+  }
+
+  .cab__nav a {
+    color: var(--ink-suave);
+    transition: color 0.15s ease;
+  }
+
+  .cab__nav a:hover {
+    color: var(--acai-700);
+  }
+
+  .cab__cta {
+    display: none;
+    padding: 0.7rem 1.3rem;
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 720px) {
+    .cab__cta {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .cab__nav {
+      display: flex;
+    }
+  }
+</style>

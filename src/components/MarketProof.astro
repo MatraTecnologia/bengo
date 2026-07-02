@@ -1,0 +1,68 @@
+---
+import { mercado } from '../data/content';
+---
+
+<section class="mercado secao" id="mercado">
+  <div class="container">
+    <div class="cabecalho-secao">
+      <span class="eyebrow">Prova de mercado</span>
+      <h2 class="titulo-secao">Por que investir em açaí agora?</h2>
+      <p class="lead">
+        O açaí é o ouro roxo do Brasil: um mercado bilionário que cresce em ritmo acelerado, muito
+        acima da média da economia, e alinhado à busca por alimentação saudável.
+      </p>
+    </div>
+
+    <div class="mercado__grid">
+      {
+        mercado.map((m) => (
+          <article class="mercado__card">
+            <p class={m.tipo === 'claro' ? 'stat-numero stat-numero--claro' : 'stat-numero'}>{m.valor}</p>
+            <p class="mercado__rotulo">{m.rotulo}</p>
+            <p class="mercado__fonte">Fonte: {m.fonte}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .mercado {
+    background: var(--nuvem);
+  }
+
+  .mercado__grid {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: 1fr;
+  }
+
+  .mercado__card {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--r-lg);
+    padding: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem);
+    box-shadow: var(--sombra-sm);
+  }
+
+  .mercado__rotulo {
+    font-size: var(--t-h3);
+    font-weight: var(--peso-semi);
+    line-height: 1.35;
+    margin-top: 1rem;
+    max-width: 24ch;
+  }
+
+  .mercado__fonte {
+    font-size: 0.85rem;
+    color: var(--ink-suave);
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 760px) {
+    .mercado__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

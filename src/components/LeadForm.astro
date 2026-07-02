@@ -1,0 +1,251 @@
+---
+import { capitalFaixas, horarios, site } from '../data/content';
+---
+
+<section class="form secao" id="formulario">
+  <div class="form__glow" aria-hidden="true"></div>
+  <div class="container form__grid">
+    <div class="form__intro">
+      <span class="eyebrow eyebrow--claro">Seja um franqueado</span>
+      <h2 class="form__titulo">Dê o primeiro passo para a sua franquia Bengô Açaí</h2>
+      <p class="form__lead">
+        Preencha seus dados e receba a apresentação completa da franquia, com projeção de
+        faturamento, custos e o passo a passo para abrir a sua unidade.
+      </p>
+
+      <ul class="form__bullets">
+        <li>Apresentação detalhada da oportunidade</li>
+        <li>Análise da sua cidade de interesse</li>
+        <li>Atendimento direto do time comercial</li>
+      </ul>
+
+      <a href={site.whatsapp} class="btn btn--wpp" target="_blank" rel="noopener">
+        Prefiro falar no WhatsApp
+      </a>
+    </div>
+
+    <form class="form__card" novalidate>
+      <div class="form__campo">
+        <label for="estado">Estado de interesse</label>
+        <input id="estado" name="estado" type="text" placeholder="Ex.: Maranhão" autocomplete="address-level1" />
+      </div>
+
+      <div class="form__campo">
+        <label for="cidade">Cidade de interesse</label>
+        <input id="cidade" name="cidade" type="text" placeholder="Ex.: São Luís" autocomplete="address-level2" />
+      </div>
+
+      <fieldset class="form__grupo">
+        <legend>Capital disponível para investimento</legend>
+        <div class="form__opcoes">
+          {
+            capitalFaixas.map((faixa, i) => (
+              <label class="form__opcao">
+                <input type="radio" name="capital" value={faixa} />
+                <span>{faixa}</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <fieldset class="form__grupo">
+        <legend>Melhor horário para contato</legend>
+        <div class="form__opcoes form__opcoes--2">
+          {
+            horarios.map((h) => (
+              <label class="form__opcao">
+                <input type="radio" name="horario" value={h} />
+                <span>{h}</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <label class="form__aceite">
+        <input type="checkbox" name="politica" />
+        <span>Aceito a política de privacidade e autorizo o contato do time Bengô Açaí.</span>
+      </label>
+
+      <button type="submit" class="btn btn--primario form__enviar">Receber apresentação</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .form {
+    position: relative;
+    background: var(--grad-acai);
+    color: var(--branco);
+    overflow: hidden;
+  }
+
+  .form__glow {
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: var(--verde);
+    filter: blur(140px);
+    opacity: 0.28;
+    bottom: -220px;
+    right: -120px;
+  }
+
+  .form__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+    align-items: center;
+  }
+
+  .form__titulo {
+    font-size: var(--t-h2);
+    margin-block: 1rem;
+    max-width: 18ch;
+  }
+
+  .form__lead {
+    font-size: var(--t-lead);
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.55;
+  }
+
+  .form__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .form__bullets li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: var(--peso-medio);
+  }
+
+  .form__bullets li::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--grad-vitalidade);
+    background-image: var(--grad-vitalidade),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e0d1c' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+    background-size: cover;
+  }
+
+  .form__card {
+    background: var(--branco);
+    color: var(--ink);
+    border-radius: var(--r-lg);
+    padding: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem);
+    box-shadow: var(--sombra-md);
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .form__campo {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .form__campo label,
+  .form__grupo legend {
+    font-weight: var(--peso-semi);
+    font-size: 0.95rem;
+  }
+
+  .form__campo input {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid var(--borda);
+    border-radius: var(--r-sm);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .form__campo input:focus {
+    outline: none;
+    border-color: var(--acai-700);
+    box-shadow: 0 0 0 3px rgba(113, 0, 78, 0.14);
+  }
+
+  .form__grupo {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .form__opcoes {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .form__opcoes--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form__opcao {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--borda);
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .form__opcao:hover {
+    border-color: var(--acai-600);
+  }
+
+  .form__opcao:has(input:checked) {
+    border-color: var(--acai-700);
+    background: rgba(113, 0, 78, 0.06);
+    font-weight: var(--peso-medio);
+  }
+
+  .form__opcao input {
+    accent-color: var(--acai-700);
+    width: 18px;
+    height: 18px;
+  }
+
+  .form__aceite {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--ink-suave);
+    cursor: pointer;
+  }
+
+  .form__aceite input {
+    accent-color: var(--verde-escuro);
+    width: 18px;
+    height: 18px;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .form__enviar {
+    width: 100%;
+  }
+
+  @media (min-width: 900px) {
+    .form__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

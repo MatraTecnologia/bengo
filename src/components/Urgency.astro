@@ -1,0 +1,63 @@
+---
+---
+
+<section class="urg" aria-label="Expansão 2025">
+  <div class="container urg__row reveal">
+    <div class="urg__texto">
+      <span class="urg__badge">Expansão 2025</span>
+      <h2 class="urg__titulo">Vagas limitadas por região</h2>
+      <p class="urg__sub">
+        A Bengô trabalha com exclusividade territorial: cada praça abre para um número restrito de
+        franqueados. Garanta a sua região antes que ela seja ocupada.
+      </p>
+    </div>
+    <a href="#quiz" class="btn btn--primario urg__cta" data-quiz-open>Verificar minha região</a>
+  </div>
+</section>
+
+<style>
+  .urg {
+    background: linear-gradient(120deg, var(--magenta) 0%, var(--acai-700) 62%, var(--acai-800) 100%);
+    color: var(--branco);
+    padding-block: clamp(2.25rem, 1.6rem + 2vw, 3.25rem);
+  }
+
+  .urg__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .urg__texto {
+    max-width: 62ch;
+  }
+
+  .urg__badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: var(--peso-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--limao);
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--r-pill);
+    margin-bottom: 0.9rem;
+  }
+
+  .urg__titulo {
+    font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.3rem);
+  }
+
+  .urg__sub {
+    margin-top: 0.7rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.55;
+  }
+
+  .urg__cta {
+    flex-shrink: 0;
+  }
+</style>

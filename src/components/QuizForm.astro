@@ -1,0 +1,320 @@
+---
+import { quizSteps, site } from '../data/content';
+const total = quizSteps.length;
+---
+
+<div class="quiz-form" data-wpp={site.whatsapp}>
+  <div class="quiz-top">
+    <span class="quiz-eyebrow">Simulador de franqueado</span>
+    <div class="quiz-progress" role="progressbar" aria-label="Progresso do simulador" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span class="quiz-progress__bar"></span>
+    </div>
+  </div>
+
+  <div class="quiz-viewport">
+    {
+      quizSteps.map((step, i) => (
+        <section class="quiz-step" data-step={i} tabindex="-1" hidden={i !== 0} aria-label={`Passo ${i + 1} de ${total}`}>
+          <span class="quiz-count">Passo {i + 1} de {total}</span>
+          <h3 class="quiz-q">{step.titulo}</h3>
+          <p class="quiz-help">{step.ajuda}</p>
+
+          {step.tipo === 'texto' && (
+            <div class="quiz-texto">
+              <label class="quiz-campo">
+                <span class="quiz-campo__label">Estado de interesse</span>
+                <input class="quiz-input" type="text" data-field={step.id} placeholder={step.placeholder} autocomplete="address-level1" />
+              </label>
+              <button class="btn btn--primario quiz-next" type="button">Continuar</button>
+            </div>
+          )}
+
+          {step.tipo === 'opcao' && (
+            <div class="quiz-opcoes">
+              {step.opcoes.map((o) => (
+                <button class="quiz-opt" type="button" data-field={step.id} data-value={o}>
+                  <span>{o}</span>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {step.tipo === 'contato' && (
+            <div class="quiz-contato">
+              {step.campos.map((c) => (
+                <label class="quiz-campo">
+                  <span class="quiz-campo__label">{c.label}</span>
+                  <input class="quiz-input" type={c.tipo} data-field={c.name} placeholder={c.placeholder} autocomplete={c.autocomplete} />
+                </label>
+              ))}
+              <button class="btn btn--primario quiz-finish" type="button">Ver meu resultado</button>
+            </div>
+          )}
+
+          {i > 0 && (
+            <button class="quiz-back" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Voltar
+            </button>
+          )}
+        </section>
+      ))
+    }
+
+    <section class="quiz-step quiz-final" data-final tabindex="-1" hidden aria-label="Resultado do simulador">
+      <span class="quiz-emoji" aria-hidden="true">🎉</span>
+      <h3 class="quiz-q">Você tem perfil de franqueado Bengô!</h3>
+      <p class="quiz-help">Enviamos suas respostas para o nosso time. Fale agora no WhatsApp e receba sua apresentação personalizada.</p>
+      <dl class="quiz-resumo"></dl>
+      <a class="btn btn--wpp quiz-wpp" target="_blank" rel="noopener">Falar com o time no WhatsApp</a>
+      <button class="quiz-back quiz-restart" type="button">Refazer o simulador</button>
+    </section>
+  </div>
+</div>
+
+<style>
+  .quiz-form {
+    background: var(--branco);
+    color: var(--ink);
+    border-radius: var(--r-lg);
+    padding: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+    box-shadow: var(--sombra-md);
+    max-width: 620px;
+    width: 100%;
+  }
+
+  .quiz-top {
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: var(--peso-semi);
+    color: var(--verde-escuro);
+    margin-bottom: 0.7rem;
+  }
+
+  .quiz-progress {
+    height: 8px;
+    border-radius: var(--r-pill);
+    background: var(--borda);
+    overflow: hidden;
+  }
+
+  .quiz-progress__bar {
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: var(--r-pill);
+    background: var(--grad-vitalidade);
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .quiz-viewport {
+    position: relative;
+  }
+
+  .quiz-step[hidden] {
+    display: none;
+  }
+
+  .quiz-step {
+    animation: quiz-slide 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes quiz-slide {
+    from {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .quiz-count {
+    font-size: 0.8rem;
+    font-weight: var(--peso-semi);
+    color: var(--verde-escuro);
+  }
+
+  .quiz-q {
+    font-size: clamp(1.3rem, 1.1rem + 1vw, 1.7rem);
+    font-weight: var(--peso-bold);
+    margin: 0.5rem 0 0.4rem;
+  }
+
+  .quiz-help {
+    color: var(--ink-suave);
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
+  }
+
+  .quiz-opcoes {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .quiz-opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: var(--peso-medio);
+    color: var(--ink);
+    padding: 1rem 1.2rem;
+    border: 1.5px solid var(--borda);
+    border-radius: var(--r-md);
+    background: var(--branco);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+
+  .quiz-opt svg {
+    color: var(--verde-escuro);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .quiz-opt:hover {
+    border-color: var(--verde);
+    background: #f4fbe6;
+    transform: translateX(2px);
+  }
+
+  .quiz-opt:hover svg {
+    opacity: 1;
+    transform: none;
+  }
+
+  .quiz-campo {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-campo__label {
+    display: block;
+    font-weight: var(--peso-semi);
+    font-size: 0.92rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .quiz-input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid var(--borda);
+    border-radius: var(--r-sm);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .quiz-input:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(151, 206, 38, 0.25);
+  }
+
+  .quiz-input[aria-invalid='true'] {
+    border-color: var(--magenta);
+  }
+
+  .quiz-next,
+  .quiz-finish {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+
+  .quiz-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.3rem;
+    background: none;
+    border: 0;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: var(--peso-medio);
+    color: var(--ink-suave);
+    cursor: pointer;
+  }
+
+  .quiz-back:hover {
+    color: var(--verde-escuro);
+  }
+
+  .quiz-final {
+    text-align: center;
+  }
+
+  .quiz-emoji {
+    font-size: 2.6rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .quiz-resumo {
+    text-align: left;
+    background: var(--gelo);
+    border-radius: var(--r-md);
+    padding: 1.1rem 1.3rem;
+    margin: 0 0 1.5rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .quiz-resumo div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.92rem;
+    border-bottom: 1px solid var(--borda);
+    padding-bottom: 0.5rem;
+  }
+
+  .quiz-resumo div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .quiz-resumo dt {
+    color: var(--ink-suave);
+  }
+
+  .quiz-resumo dd {
+    margin: 0;
+    font-weight: var(--peso-semi);
+    text-align: right;
+  }
+
+  .quiz-wpp {
+    width: 100%;
+  }
+
+  .quiz-restart {
+    margin-top: 1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quiz-step {
+      animation: none;
+    }
+    .quiz-progress__bar {
+      transition: none;
+    }
+  }
+</style>
